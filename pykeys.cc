@@ -114,28 +114,22 @@ bool inject_keypress(WORD keycode, const ModifierParams &modifiers) {
   inputs.push_back(get_key(keycode, false));
 
   if (modifiers.shift_key) {
-    PySys_WriteStdout("Shift requested.");
     inputs.push_back(get_key(VK_LSHIFT, false));
   }
 
   if (modifiers.command_win_key) {
-    PySys_WriteStdout("Win requested.");
     inputs.push_back(get_key(VK_LWIN, false));
   }
 
   if (modifiers.control_key) {
-    PySys_WriteStdout("Ctrl requested.");
     inputs.push_back(get_key(VK_LCONTROL, false));
   }
 
   if (modifiers.option_alt_key) {
-    PySys_WriteStdout("Alt requested.");
     inputs.push_back(get_key(VK_MENU, false));
   }
   UINT numSent = SendInput(inputs.size(), &inputs[0], sizeof(INPUT));
-  PySys_WriteStdout(
-    "Requested: %d Input size: %d Send: %d", numKeys, inputs.size(), numSent);
-  return numSent == inputs.size();
+  return numSent >= inputs.size();
 }
 #endif
 
@@ -348,20 +342,18 @@ static PyObject *method_send(PyObject *self, PyObject *args) {
   }
   std::string keystr = key;
 
-  #ifdef __APPLE__
-  if (LOOKUP_TABLE.count(keystr) == 0) {
-    return NULL;
-  }
-  CGKeyCode keycode = LOOKUP_TABLE.at(keystr);
   ModifierParams modifiers;
   modifiers.shift_key = shift > 0;
   modifiers.command_win_key = command_win > 0;
   modifiers.control_key = control > 0;
   modifiers.option_alt_key = option_alt > 0;
-  PySys_WriteStdout(
-    "Sending 0x%x [shift=%d, cmd=%d, ctrl=%d, alt=%d]\n",
-    keycode, shift, command_win, control, option_alt);
 
+  if (LOOKUP_TABLE.count(keystr) == 0) {
+    return NULL;
+  }
+
+  #ifdef __APPLE__
+  CGKeyCode keycode = LOOKUP_TABLE.at(keystr);
   inject_key(keycode, modifiers, true); 
   inject_key(keycode, modifiers, false); 
   int return_value = 1;
@@ -369,16 +361,11 @@ static PyObject *method_send(PyObject *self, PyObject *args) {
 
   #ifdef __WINDOWS__
   WORD keycode = LOOKUP_TABLE.at(keystr);
-  ModifierParams modifiers;
-  modifiers.shift_key = shift > 0;
-  modifiers.command_win_key = command_win > 0;
-  modifiers.control_key = control > 0;
-  modifiers.option_alt_key = option_alt > 0;
+  int return_value = inject_keypress(keycode, modifiers); 
+  #endif
   PySys_WriteStdout(
     "Sending 0x%x [shift=%d, cmd=%d, ctrl=%d, alt=%d]\n",
     keycode, shift, command_win, control, option_alt);
-  int return_value = inject_keypress(keycode, modifiers); 
-  #endif
 
   return PyLong_FromLong(return_value);
 }
