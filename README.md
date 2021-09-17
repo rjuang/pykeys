@@ -7,7 +7,7 @@ To create self-contained libraries that can be included in FL Studio (Mac and Wi
 
 # How to Use
 
-Copy the pyd files in the lib.* folders into your midiscript folder. 
+Copy the pyd files in the dist/ folder (or you can pick and choose the pyd files in the lib.* folders) into your midiscript folder. 
 
 To use, your could would do the following:
 ```
