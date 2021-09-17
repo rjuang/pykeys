@@ -7,7 +7,7 @@ def main():
     if sys.platform == "win32":
         extra_compile_args = []
         extra_linker_args = []
-        libraries=["user32"] #, "PyBridge_x64"]
+        libraries=["user32"] 
     else:
         extra_compile_args = [
             "-arch", "x86_64",

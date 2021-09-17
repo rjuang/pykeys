@@ -16,7 +16,11 @@
     #define __WINDOWS__
     #define PYTHONPATH L".\\DLLs;.\\lib;..\\"
     #define Py_BUILD_CORE
+    #if defined(_M_X64)
     #pragma comment(lib,"PyBridge_x64.lib")
+    #else
+    #pragma comment(lib,"PyBridge.lib")
+    #endif
 #endif
 
 #define PY_SSIZE_T_CLEAN
