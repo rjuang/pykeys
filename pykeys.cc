@@ -72,6 +72,10 @@ INPUT get_key(WORD keycode, bool is_down) {
     INPUT key;
     key.type = INPUT_KEYBOARD;
     key.ki.wVk = keycode;
+    key.ki.wScan = 0;
+    key.ki.time = 0;
+    key.ki.dwExtraInfo = GetMessageExtraInfo();
+    key.ki.dwFlags = 0;
     if (!is_down) {
       key.ki.dwFlags = KEYEVENTF_KEYUP;
     }
@@ -84,7 +88,7 @@ bool inject_keypress(WORD keycode, const ModifierParams &modifiers) {
   numKeys += int(modifiers.command_win_key);
   numKeys += int(modifiers.control_key);
   numKeys += int(modifiers.option_alt_key);
-  std::vector<INPUT> inputs(2 * numKeys);
+  std::vector<INPUT> inputs;
 
   if (modifiers.shift_key) {
     inputs.push_back(get_key(VK_LSHIFT, true));
@@ -106,21 +110,27 @@ bool inject_keypress(WORD keycode, const ModifierParams &modifiers) {
   inputs.push_back(get_key(keycode, false));
 
   if (modifiers.shift_key) {
+    PySys_WriteStdout("Shift requested.");
     inputs.push_back(get_key(VK_LSHIFT, false));
   }
 
   if (modifiers.command_win_key) {
+    PySys_WriteStdout("Win requested.");
     inputs.push_back(get_key(VK_LWIN, false));
   }
 
   if (modifiers.control_key) {
+    PySys_WriteStdout("Ctrl requested.");
     inputs.push_back(get_key(VK_LCONTROL, false));
   }
 
   if (modifiers.option_alt_key) {
+    PySys_WriteStdout("Alt requested.");
     inputs.push_back(get_key(VK_MENU, false));
   }
   UINT numSent = SendInput(inputs.size(), &inputs[0], sizeof(INPUT));
+  PySys_WriteStdout(
+    "Requested: %d Input size: %d Send: %d", numKeys, inputs.size(), numSent);
   return numSent == inputs.size();
 }
 #endif
