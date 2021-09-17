@@ -1,0 +1,9 @@
+LIBRARY "PyBridge_x64"
+EXPORTS
+  PyLong_FromLong=PyBridge_x64.PyLong_FromLong
+  PyUnicode_FromString=PyBridge_x64.PyUnicode_FromString
+  PyArg_ParseTuple=PyBridge_x64.PyArg_ParseTuple
+  PyArg_ParseTuple_SizeT=PyBridge_x64.PyArg_ParseTuple_SizeT
+  _PyArg_ParseTuple_SizeT=PyBridge_x64._PyArg_ParseTuple_SizeT
+  PySys_WriteStdout=PyBridge_x64.PySys_WriteStdout
+  PyModule_Create2=PyBridge_x64.PyModule_Create2

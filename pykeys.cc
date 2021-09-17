@@ -14,6 +14,9 @@
     #include <winuser.h>
     #define PLATFORM_DESC "win"
     #define __WINDOWS__
+    #define PYTHONPATH L".\\DLLs;.\\lib;..\\"
+    #define Py_BUILD_CORE
+    #pragma comment(lib,"PyBridge_x64.lib")
 #endif
 
 #define PY_SSIZE_T_CLEAN
@@ -389,7 +392,7 @@ static struct PyModuleDef moduleDef = {
 
 PyMODINIT_FUNC
 PyInit_pykeys(void) {
-  return PyModule_Create(&moduleDef);
+  return PyModule_Create2(&moduleDef, PYTHON_API_VERSION);
 }
 }
 
