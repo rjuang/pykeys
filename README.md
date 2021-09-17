@@ -5,7 +5,27 @@ Python Module (C-extension based) for injecting Keyboard events. This is purpose
 
 To create self-contained libraries that can be included in FL Studio (Mac and Windows) midi scripts (and possibly distributed with FL Studio if Image-Line chooses) to enable properly injecting keyboard events.
 
-# Buildining
+# How to Use
+
+Copy the pyd files in the lib.* folders into your midiscript folder. 
+
+To use, your could would do the following:
+```
+import pykeys
+
+
+# Assign the modifier key 0 for not pressed, and 1 if pressed.
+shift = 0
+cmd_win = 0    # Win key on windows and Command key on Macs
+ctrl = 0       # Ctrl key on both win/mac
+opt_alt = 0    # Alt key on windows and Option key on Macs
+
+retValue = pykeys.send('f6', shift, cmd_win, ctrl, opt_alt)
+# Returns true if successfully sent.
+
+```
+
+# Building
 The command to build is:
 ```
 python setup.py build_ext -f
