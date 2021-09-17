@@ -26,7 +26,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-#define VERSION "2021.09.12-2227"
+#define VERSION "2021.09.17-0100"
 
 extern "C" {
 
@@ -49,23 +49,27 @@ class ModifierParams {
 void inject_key(CGKeyCode keycode, const ModifierParams &modifiers, bool is_down) {
   CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
   CGEventRef keyevent = CGEventCreateKeyboardEvent(source, keycode, is_down);
+  CGEventFlags event_flags = 0;
 
   if (modifiers.shift_key) {
-    CGEventSetFlags(keyevent, kCGEventFlagMaskShift);
+    event_flags |= kCGEventFlagMaskShift;
   }
 
   if (modifiers.command_win_key) {
-    CGEventSetFlags(keyevent, kCGEventFlagMaskCommand);
+    event_flags |= kCGEventFlagMaskCommand;
   }
 
   if (modifiers.control_key) {
-    CGEventSetFlags(keyevent, kCGEventFlagMaskControl);
+    event_flags |= kCGEventFlagMaskControl;
   }
 
   if (modifiers.option_alt_key) {
-    CGEventSetFlags(keyevent, kCGEventFlagMaskAlternate);
+    event_flags |= kCGEventFlagMaskAlternate;
   }
 
+  if (is_down) {
+    CGEventSetFlags(keyevent, event_flags);
+  }
   CGEventPost(kCGAnnotatedSessionEventTap, keyevent);
   CFRelease(keyevent);
   CFRelease(source);
@@ -353,9 +357,16 @@ static PyObject *method_send(PyObject *self, PyObject *args) {
   }
 
   #ifdef __APPLE__
+  ModifierParams empty;
   CGKeyCode keycode = LOOKUP_TABLE.at(keystr);
+  if (modifiers.option_alt_key) {
+    inject_key(kVK_Option, empty, true);
+  }
   inject_key(keycode, modifiers, true); 
   inject_key(keycode, modifiers, false); 
+  if (modifiers.option_alt_key) {
+    inject_key(kVK_Option, empty, false);
+  }
   int return_value = 1;
   #endif
 
