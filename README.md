@@ -1,19 +1,20 @@
 # pykeys
-Python Module (C-extension based) for injecting Keyboard events. This is purposely a C-extension based plugin so that it can be easily included in FL Studio Midi Scripts.
+Python Module (C-extension based) for injecting Keyboard events. This is purposely a C-extension based plugin so that it can be easily included in FL Studio Midi Scripts. 
 
 # Goals of this Project
 
-To create a self-contained libraries that can be included in FL Studio (Mac and Windows) midi scripts (and possibly distributed with FL Studio) to enable properly injecting keyboard events.
+To create self-contained libraries that can be included in FL Studio (Mac and Windows) midi scripts (and possibly distributed with FL Studio if Image-Line chooses) to enable properly injecting keyboard events.
 
-# Schedule
-- Code to inject keyboard events in Mac OS X.
-- Code to inject keyboard events in Windows.
-- Documentation on how to use.
+# Buildining
+The command to build is:
+```
+python setup.py build_ext -f
+```
 
+To specify a specific platform, use `--plat-name`.
 
 # Windows Notes
-- Copy Python's lib file in `$PYTHON_DIR\libs\python39.lib` to `PyBridge_x64.lib`
-
+If PyBridge define files are updated, you can update the library with the following commands:
 
 ```
 lib /def:PyBridge.def /out:PyBridge.lib /machine:x86
