@@ -275,6 +275,7 @@ const std::map<std::string, CGKeyCode> LOOKUP_TABLE = {
 #ifdef __WINDOWS__
 const std::map<std::string, WORD> LOOKUP_TABLE = {
   {"return", VK_RETURN},
+  {"enter", VK_RETURN},
   {"tab", VK_TAB},
   {"space", VK_SPACE},
   {"backspace", VK_BACK},
@@ -365,6 +366,39 @@ const std::map<std::string, WORD> LOOKUP_TABLE = {
   {"\\", VK_OEM_5},
   {"backslash", VK_OEM_5},
   {"`", VK_OEM_3},
+
+  {"keypaddecimal", VK_DECIMAL},
+  {"keypad.", VK_DECIMAL},
+
+  {"keypadmultiply", VK_MULTIPLY},
+  {"keypad*", VK_MULTIPLY},
+
+  {"keypadplus", VK_ADD},
+  {"keypad+", VK_ADD},
+
+  {"keypadclear", VK_CLEAR},
+
+  {"keypaddivide", VK_DIVIDE},
+  {"keypad/", VK_DIVIDE},
+
+  {"keypadenter", VK_RETURN},
+
+  {"keypadminus", VK_SUBTRACT},
+  {"keypad-", VK_SUBTRACT},
+
+  {"keypadequals", VK_OEM_NEC_EQUAL},
+  {"keypad=", VK_OEM_NEC_EQUAL},
+
+  {"keypad0", VK_NUMPAD0},
+  {"keypad1", VK_NUMPAD1},
+  {"keypad2", VK_NUMPAD2},
+  {"keypad3", VK_NUMPAD3},
+  {"keypad4", VK_NUMPAD4},
+  {"keypad5", VK_NUMPAD5},
+  {"keypad6", VK_NUMPAD6},
+  {"keypad7", VK_NUMPAD7},
+  {"keypad8", VK_NUMPAD8},
+  {"keypad9", VK_NUMPAD9},
 };
 #endif
 
