@@ -146,6 +146,7 @@ static PyObject *method_version(PyObject *self, PyObject *args) {
 #ifdef __APPLE__
 const std::map<std::string, CGKeyCode> LOOKUP_TABLE = {
   {"return", kVK_Return},
+  {"enter", kVK_Return},
   {"tab", kVK_Tab},
   {"space", kVK_Space},
   {"backspace", kVK_Delete},
@@ -236,6 +237,39 @@ const std::map<std::string, CGKeyCode> LOOKUP_TABLE = {
   {"\\", kVK_ANSI_Backslash},
   {"backslash", kVK_ANSI_Backslash},
   {"`", kVK_ANSI_Grave},
+
+  {"keypaddecimal", kVK_ANSI_KeypadDecimal},
+  {"keypad.", kVK_ANSI_KeypadDecimal},
+
+  {"keypadmultiply", kVK_ANSI_KeypadMultiply},
+  {"keypad*", kVK_ANSI_KeypadMultiply},
+
+  {"keypadplus", kVK_ANSI_KeypadPlus},
+  {"keypad+", kVK_ANSI_KeypadPlus},
+
+  {"keypadclear", kVK_ANSI_KeypadClear},
+
+  {"keypaddivide", kVK_ANSI_KeypadDivide},
+  {"keypad/", kVK_ANSI_KeypadDivide},
+
+  {"keypadenter", kVK_ANSI_KeypadEnter},
+
+  {"keypadminus", kVK_ANSI_KeypadMinus},
+  {"keypad-", kVK_ANSI_KeypadMinus},
+
+  {"keypadequals", kVK_ANSI_KeypadEquals},
+  {"keypad=", kVK_ANSI_KeypadEquals},
+
+  {"keypad0", kVK_ANSI_Keypad0},
+  {"keypad1", kVK_ANSI_Keypad1},
+  {"keypad2", kVK_ANSI_Keypad2},
+  {"keypad3", kVK_ANSI_Keypad3},
+  {"keypad4", kVK_ANSI_Keypad4},
+  {"keypad5", kVK_ANSI_Keypad5},
+  {"keypad6", kVK_ANSI_Keypad6},
+  {"keypad7", kVK_ANSI_Keypad7},
+  {"keypad8", kVK_ANSI_Keypad8},
+  {"keypad9", kVK_ANSI_Keypad9},
 };
 #endif
 #ifdef __WINDOWS__
